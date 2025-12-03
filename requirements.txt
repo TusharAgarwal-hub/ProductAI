@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+pydantic
+httpx
+google-generativeai
+elevenlabs==1.4.0
+pydub
+opencv-python-headless==4.10.0.84
+pytesseract
+numpy
+pillow

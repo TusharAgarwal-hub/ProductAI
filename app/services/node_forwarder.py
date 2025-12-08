@@ -9,6 +9,7 @@ def send_audio_to_node(audio_bytes: bytes, text: str):
     Sends audio + cleaned text to Node.
     """
     try:
+        print("[Python] Sending audio to Node.js server...")
         files = {
             "audio": ("output.mp3", audio_bytes, "audio/mpeg")
         }

@@ -1,0 +1,390 @@
+# Python Layer Integration Guide
+
+## Overview
+
+The Node.js layer sends data to your Python service at the `/audio-full-process` endpoint. This document explains the exact structure and order of data you'll receive.
+
+## Endpoint
+
+**POST** `http://localhost:8000/audio-full-process`
+
+## Request Payload Structure
+
+```python
+{
+    "text": str,                    # Transcribed text from Deepgram
+    "domEvents": list[dict],        # DOM events from Chrome extension
+    "recordingsPath": str,          # Path to recordings directory
+    "deepgramResponse": dict,       # Full Deepgram JSON response (optional)
+    "metadata": dict                # Session metadata
+}
+```
+
+---
+
+## 1. Transcript Text (`text`)
+
+**Type:** `string`  
+**Required:** Yes  
+**Description:** The transcribed text from Deepgram
+
+### Example:
+```python
+"text": "This is a updated, uh, recording for checking Python is working or not."
+```
+
+### Usage:
+```python
+from fastapi import FastAPI, Request
+
+@app.post("/audio-full-process")
+async def process_audio(request: Request):
+    data = await request.json()
+    
+    # Extract transcript
+    transcript = data.get("text", "")
+    print(f"Received transcript: {transcript}")
+```
+
+---
+
+## 2. DOM Events (`domEvents`)
+
+**Type:** `array of objects`  
+**Required:** Yes (can be empty array)  
+**Description:** User interactions captured by the Chrome extension
+
+### Structure:
+```python
+[
+    {
+        "type": str,           # Event type: "click", "input", "scroll", etc.
+        "target": str,         # CSS selector or element description
+        "timestamp": int,      # Unix timestamp in milliseconds
+        "value": str,          # For input events (optional)
+        "x": int,              # Mouse X coordinate (optional)
+        "y": int,              # Mouse Y coordinate (optional)
+        "metadata": dict       # Additional event data (optional)
+    }
+]
+```
+
+### Example:
+```python
+"domEvents": [
+    {
+        "type": "click",
+        "target": "button#submit",
+        "timestamp": 1765169845000,
+        "x": 450,
+        "y": 320
+    },
+    {
+        "type": "input",
+        "target": "input#email",
+        "timestamp": 1765169846000,
+        "value": "user@example.com"
+    }
+]
+```
+
+### Usage:
+```python
+@app.post("/audio-full-process")
+async def process_audio(request: Request):
+    data = await request.json()
+    
+    # Extract DOM events
+    dom_events = data.get("domEvents", [])
+    
+    print(f"Received {len(dom_events)} DOM events")
+    
+    for event in dom_events:
+        event_type = event.get("type")
+        target = event.get("target")
+        timestamp = event.get("timestamp")
+        
+        print(f"Event: {event_type} on {target} at {timestamp}")
+```
+
+---
+
+## 3. Full Deepgram Response (`deepgramResponse`)
+
+**Type:** `object`  
+**Required:** No (can be `null` for chat messages)  
+**Description:** Complete Deepgram transcription response with timeline and metadata
+
+### Structure:
+```python
+{
+    "text": str,                    # Same as top-level text
+    "timeline": list[dict],         # Utterance timeline with speech/silence
+    "metadata": dict,               # Deepgram API metadata
+    "raw": dict                     # Raw Deepgram API response
+}
+```
+
+### Timeline Structure:
+```python
+"timeline": [
+    {
+        "start": float,     # Start time in seconds
+        "end": float,       # End time in seconds
+        "text": str,        # Utterance text or "—" for silence
+        "type": str         # "speech" or "silence"
+    }
+]
+```
+
+### Complete Example:
+```python
+"deepgramResponse": {
+    "text": "This is a updated, uh, recording for checking Python is working or not.",
+    "timeline": [
+        {
+            "start": 0.0,
+            "end": 5.2,
+            "text": "This is a updated, uh, recording for checking Python is working or not.",
+            "type": "speech"
+        },
+        {
+            "start": 5.2,
+            "end": 7.8,
+            "text": "—",
+            "type": "silence"
+        },
+        {
+            "start": 7.8,
+            "end": 12.5,
+            "text": "We will just as I took a pause, so it should say, uh, give me a pause.",
+            "type": "speech"
+        }
+    ],
+    "metadata": {
+        "request_id": "8bc9a281-f1c6-4a5b-9acf-4e3713e646fd",
+        "duration": 22.8,
+        "channels": 1,
+        "created": "2025-12-08T04:57:33.055Z",
+        "model_info": {
+            "1abfe86b-e047-4eed-858a-35e5625b41ee": {
+                "name": "2-general-nova",
+                "version": "2024-01-06.5664",
+                "arch": "nova-2"
+            }
+        }
+    },
+    "raw": {
+        // Full Deepgram API response
+    }
+}
+```
+
+### Usage:
+```python
+@app.post("/audio-full-process")
+async def process_audio(request: Request):
+    data = await request.json()
+    
+    # Extract Deepgram response
+    deepgram_response = data.get("deepgramResponse")
+    
+    if deepgram_response:
+        # Get timeline for precise timing analysis
+        timeline = deepgram_response.get("timeline", [])
+        
+        # Analyze speech patterns
+        for segment in timeline:
+            if segment["type"] == "speech":
+                duration = segment["end"] - segment["start"]
+                print(f"Speech: {segment['text'][:50]}... ({duration:.2f}s)")
+            elif segment["type"] == "silence":
+                duration = segment["end"] - segment["start"]
+                print(f"Silence: {duration:.2f}s")
+        
+        # Get metadata
+        metadata = deepgram_response.get("metadata", {})
+        total_duration = metadata.get("duration", 0)
+        model_name = metadata.get("model_info", {})
+        
+        print(f"Total duration: {total_duration}s")
+```
+
+---
+
+## 4. Additional Fields
+
+### Recordings Path (`recordingsPath`)
+**Type:** `string`  
+**Description:** Absolute path to the recordings directory on the Node.js server
+
+```python
+"recordingsPath": "D:\\Code\\FullStack\\Clueso_Node_layer\\recordings"
+```
+
+### Metadata (`metadata`)
+**Type:** `object`  
+**Description:** Session and request metadata
+
+```python
+"metadata": {
+    "sessionId": "session_1765169815011_42vv5c1iu",
+    "url": "https://example.com",
+    "viewport": {"width": 1920, "height": 1080},
+    "startTime": "2025-12-08T10:27:05.000Z",
+    "endTime": "2025-12-08T10:27:25.000Z",
+    "timestamp": "2025-12-08T10:27:29.000Z"
+}
+```
+
+---
+
+## Complete Python Example
+
+```python
+from fastapi import FastAPI, Request, HTTPException
+from typing import Optional, List, Dict, Any
+import logging
+
+app = FastAPI()
+logger = logging.getLogger(__name__)
+
+@app.post("/audio-full-process")
+async def process_audio(request: Request):
+    try:
+        # Parse incoming data
+        data = await request.json()
+        
+        # 1. Extract transcript text (REQUIRED)
+        transcript = data.get("text", "")
+        if not transcript:
+            raise HTTPException(status_code=400, detail="Text is required")
+        
+        # 2. Extract DOM events (REQUIRED, can be empty)
+        dom_events: List[Dict[str, Any]] = data.get("domEvents", [])
+        
+        # 3. Extract Deepgram response (OPTIONAL)
+        deepgram_response: Optional[Dict[str, Any]] = data.get("deepgramResponse")
+        
+        # 4. Extract metadata
+        metadata: Dict[str, Any] = data.get("metadata", {})
+        session_id = metadata.get("sessionId")
+        
+        logger.info(f"Processing session: {session_id}")
+        logger.info(f"Transcript length: {len(transcript)} characters")
+        logger.info(f"DOM events count: {len(dom_events)}")
+        logger.info(f"Has Deepgram response: {deepgram_response is not None}")
+        
+        # Process timeline if available
+        if deepgram_response:
+            timeline = deepgram_response.get("timeline", [])
+            logger.info(f"Timeline segments: {len(timeline)}")
+            
+            # Analyze speech patterns
+            speech_segments = [s for s in timeline if s["type"] == "speech"]
+            silence_segments = [s for s in timeline if s["type"] == "silence"]
+            
+            logger.info(f"Speech segments: {len(speech_segments)}")
+            logger.info(f"Silence segments: {len(silence_segments)}")
+        
+        # Process DOM events
+        for event in dom_events:
+            event_type = event.get("type")
+            target = event.get("target")
+            logger.info(f"Event: {event_type} on {target}")
+        
+        # Your AI processing logic here
+        instructions = generate_instructions(
+            transcript=transcript,
+            dom_events=dom_events,
+            deepgram_data=deepgram_response
+        )
+        
+        # Return response
+        return {
+            "success": True,
+            "instructions": instructions,
+            "processed_audio_filename": None  # Optional: return processed audio filename
+        }
+        
+    except Exception as e:
+        logger.error(f"Error processing audio: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Processing failed: {str(e)}")
+
+
+def generate_instructions(transcript: str, dom_events: List[Dict], deepgram_data: Optional[Dict]) -> List[Dict]:
+    """
+    Generate instructions based on transcript, DOM events, and Deepgram data
+    """
+    instructions = []
+    
+    # Example: Use timeline to detect pauses
+    if deepgram_data:
+        timeline = deepgram_data.get("timeline", [])
+        for segment in timeline:
+            if segment["type"] == "silence" and (segment["end"] - segment["start"]) > 2.0:
+                instructions.append({
+                    "action": "pause_detected",
+                    "target": "timeline",
+                    "metadata": {
+                        "duration": segment["end"] - segment["start"],
+                        "timestamp": segment["start"]
+                    }
+                })
+    
+    # Example: Process DOM events
+    for event in dom_events:
+        if event.get("type") == "click":
+            instructions.append({
+                "action": "click",
+                "target": event.get("target"),
+                "metadata": event
+            })
+    
+    return instructions
+```
+
+---
+
+## Data Processing Order
+
+1. **Validate** that `text` field exists
+2. **Extract** DOM events array (can be empty)
+3. **Check** if `deepgramResponse` exists (optional for chat)
+4. **Process** timeline for speech/silence analysis
+5. **Correlate** DOM events with transcript timeline
+6. **Generate** AI instructions
+7. **Return** response with instructions
+
+---
+
+## Response Format Expected by Node.js
+
+```python
+{
+    "success": bool,
+    "instructions": [
+        {
+            "action": str,
+            "target": str,
+            "metadata": dict
+        }
+    ],
+    "processed_audio_filename": str  # Optional
+}
+```
+
+---
+
+## Error Handling
+
+If processing fails, return:
+
+```python
+raise HTTPException(
+    status_code=500,
+    detail="Processing failed: <error message>"
+)
+```
+
+The Node.js layer will catch this and notify the frontend.

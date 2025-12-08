@@ -30,8 +30,3 @@ utils/__pycache__/
 # --- Sensitive/Local Configuration Files ---
 # Critical for free-tier services like Railway/Render
 .env
-
-RAG_SYNCED_NARRATION_GUIDE.md
-REFACTORING_SUMMARY.md
-recording_session_1764880953143_vvrxy7jsv_1764880953162.json
-temp_videos/

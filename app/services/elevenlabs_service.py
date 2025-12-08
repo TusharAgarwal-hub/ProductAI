@@ -7,29 +7,24 @@ load_dotenv()
 
 API_KEY = os.getenv("ELEVENLABS_API_KEY")
 
-# Initialize ElevenLabs client only if key is present
 client = ElevenLabs(api_key=API_KEY) if API_KEY else None
 
-# Default voice (you may change it later)
-DEFAULT_VOICE_ID = "bIHbv24MWmeRgasZH58o"     # built-in free voice
-MODEL = "eleven_multilingual_v2"  # best quality, supports many languages
+DEFAULT_VOICE_ID = "TX3LPaxmHKxFdv7VOQHJ"
+MODEL = "eleven_multilingual_v2"
 
 
 def generate_voice_from_text(text: str, voice_id: str = DEFAULT_VOICE_ID) -> bytes:
-    """
-    Convert product demo text into realistic narrated audio.
-    Returns raw audio bytes (mp3 format).
-    """
 
     if not API_KEY or client is None:
-        raise RuntimeError("ELEVENLABS_API_KEY is missing. Provide a valid key or disable TTS.")
+        raise RuntimeError("ELEVENLABS_API_KEY missing")
 
     try:
-        # Convert text → audio stream generator
-        audio_stream = client.text_to_speech.convert(
+        # realtime API always streams chunks
+        stream = client.text_to_speech.convert(
+            text=text,
             voice_id=voice_id,
             model_id=MODEL,
-            text=text,
+            output_format="mp3_44100_128",
             voice_settings=VoiceSettings(
                 stability=0.4,
                 similarity_boost=0.8,
@@ -38,20 +33,13 @@ def generate_voice_from_text(text: str, voice_id: str = DEFAULT_VOICE_ID) -> byt
             )
         )
 
-        # Combine the stream into bytes
-        audio_bytes = b"".join(chunk for chunk in audio_stream)
+        # join streaming chunks into a full mp3 byte blob
+        audio_bytes = b"".join(chunk for chunk in stream)
+
+        if not audio_bytes:
+            raise RuntimeError("Empty audio response")
 
         return audio_bytes
 
     except Exception as e:
-        err_msg = str(e)
-
-        # Common ElevenLabs free-tier / auth failure pattern
-        if "401" in err_msg or "Unusual activity detected" in err_msg or "detected_unusual_activity" in err_msg:
-            raise RuntimeError(
-                "ElevenLabs rejected the request (401 / unusual activity). "
-                "Free tier may be blocked or API key invalid. Use a paid key or different account."
-            ) from e
-
-        # Generic fallback
-        raise RuntimeError(f"Failed to generate audio from ElevenLabs: {err_msg}") from e
+        raise RuntimeError(f"ElevenLabs error: {e}") from e

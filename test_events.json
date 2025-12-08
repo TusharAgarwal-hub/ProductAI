@@ -1,0 +1,260 @@
+{
+  "sessionId": "session_1765146020495_d4wio4j64",
+  "startTime": 1765146020748,
+  "endTime": 1765146042481,
+  "url": "https://aistudio.google.com/usage?timeRange=last-7-days&project=gen-lang-client-0151852985&tab=rate-limit",
+  "viewport": {
+    "width": 1536,
+    "height": 695
+  },
+  "events": [
+    {
+      "timestamp": 4539,
+      "type": "click",
+      "target": {
+        "tag": "DIV",
+        "id": null,
+        "classes": [
+          "mat-mdc-tab-labels"
+        ],
+        "text": "UsageRate LimitBilling",
+        "selector": "div.mat-mdc-tab-labels",
+        "bbox": {
+          "x": 307,
+          "y": 100,
+          "width": 1128,
+          "height": 48
+        },
+        "attributes": {}
+      },
+      "metadata": {
+        "url": "https://aistudio.google.com/usage?timeRange=last-1-day&project=gen-lang-client-0151852985&tab=rate-limit",
+        "viewport": {
+          "width": 1536,
+          "height": 695
+        }
+      }
+    },
+    {
+      "timestamp": 7690,
+      "type": "scroll",
+      "metadata": {
+        "url": "https://aistudio.google.com/usage?timeRange=last-1-day&project=gen-lang-client-0151852985&tab=rate-limit",
+        "viewport": {
+          "width": 1536,
+          "height": 695
+        },
+        "scrollPosition": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "timestamp": 9109,
+      "type": "scroll",
+      "metadata": {
+        "url": "https://aistudio.google.com/usage?timeRange=last-1-day&project=gen-lang-client-0151852985&tab=rate-limit",
+        "viewport": {
+          "width": 1536,
+          "height": 695
+        },
+        "scrollPosition": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "timestamp": 9571,
+      "type": "scroll",
+      "metadata": {
+        "url": "https://aistudio.google.com/usage?timeRange=last-1-day&project=gen-lang-client-0151852985&tab=rate-limit",
+        "viewport": {
+          "width": 1536,
+          "height": 695
+        },
+        "scrollPosition": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "timestamp": 12642,
+      "type": "scroll",
+      "metadata": {
+        "url": "https://aistudio.google.com/usage?timeRange=last-1-day&project=gen-lang-client-0151852985&tab=rate-limit",
+        "viewport": {
+          "width": 1536,
+          "height": 695
+        },
+        "scrollPosition": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "timestamp": 13366,
+      "type": "click",
+      "target": {
+        "tag": "DIV",
+        "id": null,
+        "classes": [
+          "mat-mdc-slide-toggle-touch-target"
+        ],
+        "text": null,
+        "selector": "div.mat-mdc-slide-toggle-touch-target",
+        "bbox": {
+          "x": 1319,
+          "y": 216,
+          "width": 34,
+          "height": 48
+        },
+        "attributes": {}
+      },
+      "metadata": {
+        "url": "https://aistudio.google.com/usage?timeRange=last-1-day&project=gen-lang-client-0151852985&tab=rate-limit",
+        "viewport": {
+          "width": 1536,
+          "height": 695
+        }
+      }
+    },
+    {
+      "timestamp": 15109,
+      "type": "scroll",
+      "metadata": {
+        "url": "https://aistudio.google.com/usage?timeRange=last-1-day&project=gen-lang-client-0151852985&tab=rate-limit",
+        "viewport": {
+          "width": 1536,
+          "height": 695
+        },
+        "scrollPosition": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "timestamp": 16079,
+      "type": "click",
+      "target": {
+        "tag": "DIV",
+        "id": null,
+        "classes": [
+          "mat-mdc-tab-body-content",
+          "mat-tab-body-content-can-animate"
+        ],
+        "text": "ProjectProductTextGenerationTime Range1 DayRate limits by model info  All models Peak usage per model compared to its limit over the last 1 dayStatusModelCategoryRPMTPMRPDCharts check gemini-2.5-flashText-out models1 /  5 183 /  250K 0 /  20 bar_chart check gemini-2.5-flash-liteText-out models1 /  10 204 /  250K 0 /  20 bar_chart check gemini-2.5-flash-ttsMulti-modal generative models0 /  3 0 /  10K 0 /  10 bar_chart check gemini-robotics-er-1.5-previewOther models0 /  10 0 /  250K 0 /  250 bar_chart check gemma-3-12bOther models0 /  30 0 /  15K 0 /  14.4K bar_chart check gemma-3-1bOther models0 /  30 0 /  15K 0 /  14.4K bar_chart check gemma-3-27bOther models0 /  30 0 /  15K 0 /  14.4K bar_chart check gemma-3-2bOther models0 /  30 0 /  15K 0 /  14.4K bar_chart check gemma-3-4bOther models0 /  30 0 /  15K 0 /  14.4K bar_chart check learnlm-2.0-flash-experimental0 /  15 N/A0 /  1.5K bar_chart check gemini-2.5-flash-liveLive API0 / Unlimited0 /  1M 0 / Unlimitedbar_chart check gemini-2.5-flash-native-audio-dialogLive API0 / Unlimited0 /  1M 0 / Unlimitedbar_chart check gemini-2.0-flash-liveLive API0 / UnlimitedN/A0 / Unlimitedbar_chart Learn more  Set up billing Rate limits breakdownModel gemini-2.5-flash Peak requests per minute (RPM)UntitledThis chart is described by one or more grids. A grid row represents a time series. A grid column corresponds to a timestamp. By default, charts hide most columns. To display the hidden columns next to the activated column, use the Read previous item (up arrow) key until you access the column header, and then use the Activate button (enter) key.Data in this chart spans a time range from Saturday, December 6, 2025 at 2:20:27 PM Pacific Standard Time to Sunday, December 7, 2025 at 2:20:27 PM Pacific Standard Time. Unpinning the X axis cursor allows the cursor to follow the mouse while hovering over the chart. The X axis cursor will always be pinned while using keyboard navigation to indicate that the values reflected in the tooltip or the legend are associated with the position of the X axis cursor.\nData values on this chart range from a minimum of 0 to a maximum of 5. Populate data for table, \"Stacked Area\", on chart, \"Untitled\"\n Navigate this grid using arrow keys. Page Up and Page Down moves focus up and down by 10 rows. Home and End moves focus to the first and last cell in the current row. Ctrl+Home and Ctrl+End moves focus to the first and last cell of the grid.\nGrid for data, \"Stacked Area\", on chart, \"Untitled\". Navigate this grid using arrow keys. Page Up and Page Down moves focus up and down by 10 rows. Home and End moves focus to the first and last cell in the current row. Ctrl+Home and Ctrl+End moves focus to the first and last cell of the grid.Audio To save memory, this table is inactive by default. To populate this table, click the \"Populate data for table, \"Stacked Area\", on chart, \"Untitled\"\" button just prior to this table.  If subsequent columns are omitted, activating a column header will reveal all subsequent columns up to the next revealed column.\n If subsequent rows are omitted, activating a row header will reveal all subsequent rows up to the next revealed row.\n Activating a grid cell will open the tooltip at this data point.\n \n Populate data for table, \"Line\", on chart, \"Untitled\"\n Navigate this grid using arrow keys. Page Up and Page Down moves focus up and down by 10 rows. Home and End moves focus to the first and last cell in the current row. Ctrl+Home and Ctrl+End moves focus to the first and last cell of the grid.\nGrid for data, \"Line\", on chart, \"Untitled\". Navigate this grid using arrow keys. Page Up and Page Down moves focus up and down by 10 rows. Home and End moves focus to the first and last cell in the current row. Ctrl+Home and Ctrl+End moves focus to the first and last cell of the grid.Audio To save memory, this table is inactive by default. To populate this table, click the \"Populate data for table, \"Line\", on chart, \"Untitled\"\" button just prior to this table.  If subsequent columns are omitted, activating a column header will reveal all subsequent columns up to the next revealed column.\n If subsequent rows are omitted, activating a row header will reveal all subsequent rows up to the next revealed row.\n Activating a grid cell will open the tooltip at this data point.\n \nPeak input tokens per minute (TPM)UntitledThis chart is described by one or more grids. A grid row represents a time series. A grid column corresponds to a timestamp. By default, charts hide most columns. To display the hidden columns next to the activated column, use the Read previous item (up arrow) key until you access the column header, and then use the Activate button (enter) key.Data in this chart spans a time range from Saturday, December 6, 2025 at 2:20:27 PM Pacific Standard Time to Sunday, December 7, 2025 at 2:20:27 PM Pacific Standard Time. Unpinning the X axis cursor allows the cursor to follow the mouse while hovering over the chart. The X axis cursor will always be pinned while using keyboard navigation to indicate that the values reflected in the tooltip or the legend are associated with the position of the X axis cursor.\nData values on this chart range from a minimum of 0 to a maximum of 250k. Populate data for table, \"Stacked Area\", on chart, \"Untitled\"\n Navigate this grid using arrow keys. Page Up and Page Down moves focus up and down by 10 rows. Home and End moves focus to the first and last cell in the current row. Ctrl+Home and Ctrl+End moves focus to the first and last cell of the grid.\nGrid for data, \"Stacked Area\", on chart, \"Untitled\". Navigate this grid using arrow keys. Page Up and Page Down moves focus up and down by 10 rows. Home and End moves focus to the first and last cell in the current row. Ctrl+Home and Ctrl+End moves focus to the first and last cell of the grid.Audio To save memory, this table is inactive by default. To populate this table, click the \"Populate data for table, \"Stacked Area\", on chart, \"Untitled\"\" button just prior to this table.  If subsequent columns are omitted, activating a column header will reveal all subsequent columns up to the next revealed column.\n If subsequent rows are omitted, activating a row header will reveal all subsequent rows up to the next revealed row.\n Activating a grid cell will open the tooltip at this data point.\n \n Populate data for table, \"Line\", on chart, \"Untitled\"\n Navigate this grid using arrow keys. Page Up and Page Down moves focus up and down by 10 rows. Home and End moves focus to the first and last cell in the current row. Ctrl+Home and Ctrl+End moves focus to the first and last cell of the grid.\nGrid for data, \"Line\", on chart, \"Untitled\". Navigate this grid using arrow keys. Page Up and Page Down moves focus up and down by 10 rows. Home and End moves focus to the first and last cell in the current row. Ctrl+Home and Ctrl+End moves focus to the first and last cell of the grid.Audio To save memory, this table is inactive by default. To populate this table, click the \"Populate data for table, \"Line\", on chart, \"Untitled\"\" button just prior to this table.  If subsequent columns are omitted, activating a column header will reveal all subsequent columns up to the next revealed column.\n If subsequent rows are omitted, activating a row header will reveal all subsequent rows up to the next revealed row.\n Activating a grid cell will open the tooltip at this data point.\n \nPeak requests per day (RPD)UntitledThis chart is described by one or more grids. A grid row represents a time series. A grid column corresponds to a timestamp. By default, charts hide most columns. To display the hidden columns next to the activated column, use the Read previous item (up arrow) key until you access the column header, and then use the Activate button (enter) key. Unpinning the X axis cursor allows the cursor to follow the mouse while hovering over the chart. The X axis cursor will always be pinned while using keyboard navigation to indicate that the values reflected in the tooltip or the legend are associated with the position of the X axis cursor.\nData values on this chart range from a minimum of 20 to a maximum of 20. Populate data for table, \"Line\", on chart, \"Untitled\"\n Navigate this grid using arrow keys. Page Up and Page Down moves focus up and down by 10 rows. Home and End moves focus to the first and last cell in the current row. Ctrl+Home and Ctrl+End moves focus to the first and last cell of the grid.\nGrid for data, \"Line\", on chart, \"Untitled\". Navigate this grid using arrow keys. Page Up and Page Down moves focus up and down by 10 rows. Home and End moves focus to the first and last cell in the current row. Ctrl+Home and Ctrl+End moves focus to the first and last cell of the grid.Audio To save memory, this table is inactive by default. To populate this table, click the \"Populate data for table, \"Line\", on chart, \"Untitled\"\" button just prior to this table.  If subsequent columns are omitted, activating a column header will reveal all subsequent columns up to the next revealed column.\n If subsequent rows are omitted, activating a row header will reveal all subsequent rows up to the next revealed row.\n Activating a grid cell will open the tooltip at this data point.",
+        "selector": "div.mat-mdc-tab-body-content.mat-tab-body-content-can-animate",
+        "bbox": {
+          "x": 307,
+          "y": 149,
+          "width": 1128,
+          "height": 1290
+        },
+        "attributes": {}
+      },
+      "metadata": {
+        "url": "https://aistudio.google.com/usage?timeRange=last-1-day&project=gen-lang-client-0151852985&tab=rate-limit",
+        "viewport": {
+          "width": 1536,
+          "height": 695
+        }
+      }
+    },
+    {
+      "timestamp": 16551,
+      "type": "click",
+      "target": {
+        "tag": "DIV",
+        "id": "mat-select-value-1",
+        "classes": [
+          "mat-mdc-select-value"
+        ],
+        "text": "1 Day",
+        "selector": "#mat-select-value-1",
+        "bbox": {
+          "x": 672,
+          "y": 171,
+          "width": 94,
+          "height": 20
+        },
+        "attributes": {}
+      },
+      "metadata": {
+        "url": "https://aistudio.google.com/usage?timeRange=last-1-day&project=gen-lang-client-0151852985&tab=rate-limit",
+        "viewport": {
+          "width": 1536,
+          "height": 695
+        }
+      }
+    },
+    {
+      "timestamp": 17409,
+      "type": "click",
+      "target": {
+        "tag": "MAT-OPTION",
+        "id": "mat-option-3",
+        "classes": [
+          "mat-mdc-option",
+          "mdc-list-item",
+          "ng-star-inserted"
+        ],
+        "text": "7 Days",
+        "selector": "#mat-option-3",
+        "bbox": {
+          "x": 669,
+          "y": 282,
+          "width": 110,
+          "height": 36
+        },
+        "attributes": {
+          "role": "option"
+        }
+      },
+      "metadata": {
+        "url": "https://aistudio.google.com/usage?timeRange=last-1-day&project=gen-lang-client-0151852985&tab=rate-limit",
+        "viewport": {
+          "width": 1536,
+          "height": 695
+        }
+      }
+    },
+    {
+      "timestamp": 18920,
+      "type": "scroll",
+      "metadata": {
+        "url": "https://aistudio.google.com/usage?timeRange=last-7-days&project=gen-lang-client-0151852985&tab=rate-limit",
+        "viewport": {
+          "width": 1536,
+          "height": 695
+        },
+        "scrollPosition": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "timestamp": 19939,
+      "type": "scroll",
+      "metadata": {
+        "url": "https://aistudio.google.com/usage?timeRange=last-7-days&project=gen-lang-client-0151852985&tab=rate-limit",
+        "viewport": {
+          "width": 1536,
+          "height": 695
+        },
+        "scrollPosition": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    }
+  ],
+  "videoPath": "D:\\Code\\FullStack\\Clueso_Node_layer\\src\\recordings\\recording_session_1765146020495_d4wio4j64_video.webm",
+  "audioPath": "D:\\Code\\FullStack\\Clueso_Node_layer\\src\\recordings\\recording_session_1765146020495_d4wio4j64_audio.webm",
+  "processedAt": "2025-12-07T22:20:42.528Z"
+}

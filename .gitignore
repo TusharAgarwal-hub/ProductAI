@@ -30,3 +30,4 @@ utils/__pycache__/
 # --- Sensitive/Local Configuration Files ---
 # Critical for free-tier services like Railway/Render
 .env
+*.md

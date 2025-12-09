@@ -4,5 +4,6 @@ python-dotenv
 pydantic
 httpx
 google-generativeai
-elevenlabs==1.4.0
+elevenlabs
 pydub
+python-multipart

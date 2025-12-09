@@ -25,7 +25,7 @@ load_dotenv()
 API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=API_KEY)
 
-model = genai.GenerativeModel("gemini-2.5-flash")
+model = genai.GenerativeModel("gemini-2.5-flash-lite")
 
 
 def analyze_word_timings(words: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -198,7 +198,7 @@ def analyze_word_timings(words: List[Dict[str, Any]]) -> Dict[str, Any]:
     average_gap = sum(g["duration"] for g in gaps) / len(gaps) if gaps else 0
     speaking_rate = len(words) / total_duration if total_duration > 0 else 0
 
-    print(f"[Timing Analysis] ✅ Analysis complete:")
+    print(f"[Timing Analysis] --->Analysis complete:")
     print(f"[Timing Analysis]   - Total duration: {total_duration:.2f}s")
     print(f"[Timing Analysis]   - Total words: {len(words)}")
     print(f"[Timing Analysis]   - Speaking rate: {speaking_rate:.2f} words/sec")
@@ -295,7 +295,7 @@ def generate_product_script(
     print(f"\n[Script Generation] Step 1/4: Analyzing word timings...")
     timing_analysis = analyze_word_timings(word_timings)
     timing_context = build_timing_context(timing_analysis)
-    print(f"[Script Generation] ✅ Timing analysis complete")
+    print(f"[Script Generation] --->Timing analysis complete")
 
     # 2. Build RAG context from DOM events (if available)
     print(f"\n[Script Generation] Step 2/4: Building RAG context from DOM events...")
@@ -314,7 +314,7 @@ def generate_product_script(
         timeline_context = _format_timeline(timeline)
         print(f"[Script Generation]   - Extracting UI elements...")
         ui_elements = extract_ui_elements_summary(session.events)
-        print(f"[Script Generation] ✅ RAG context built successfully")
+        print(f"[Script Generation] --->RAG context built successfully")
     else:
         print(
             f"[Script Generation]   ⚠️  No DOM events available, skipping RAG context"
@@ -380,7 +380,7 @@ PRODUCTION-READY SCRIPT:
 """.strip()
 
     print(f"[Script Generation]   - Prompt length: {len(prompt)} characters")
-    print(f"[Script Generation] ✅ Prompt built")
+    print(f"[Script Generation] --->Prompt built")
 
     # 4. Generate script with Gemini
     print(f"\n[Script Generation] Step 4/4: Calling Gemini API...")

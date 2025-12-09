@@ -1,45 +1,74 @@
+# elevenlabs_service.py — Deepgram + background music, NO ffmpeg REQUIRED
+
 import os
+import re
+import tempfile
+from pathlib import Path
+from typing import List
+
+import requests
 from dotenv import load_dotenv
-from elevenlabs.client import ElevenLabs
-from elevenlabs import VoiceSettings
+from pydub import AudioSegment
 
 load_dotenv()
 
-API_KEY = os.getenv("ELEVENLABS_API_KEY")
-
-client = ElevenLabs(api_key=API_KEY) if API_KEY else None
-
-DEFAULT_VOICE_ID = "TX3LPaxmHKxFdv7VOQHJ"
-MODEL = "eleven_multilingual_v2"
+DEEPGRAM_API_KEY = os.getenv("DEEPGRAM_API_KEY")
+DEFAULT_VOICE_MODEL = "aura-2-thalia-en"
+DEEPGRAM_SPEAK_URL = "https://api.deepgram.com/v1/speak"
 
 
-def generate_voice_from_text(text: str, voice_id: str = DEFAULT_VOICE_ID) -> bytes:
+def chunk_by_sentence(text: str) -> List[str]:
+    sentences = re.split(r'(?<=[.!?])\s+', text.strip())
+    return [s.strip() for s in sentences if s.strip()]
 
-    if not API_KEY or client is None:
-        raise RuntimeError("ELEVENLABS_API_KEY missing")
 
-    try:
-        # realtime API always streams chunks
-        stream = client.text_to_speech.convert(
-            text=text,
-            voice_id=voice_id,
-            model_id=MODEL,
-            output_format="mp3_44100_128",
-            voice_settings=VoiceSettings(
-                stability=0.4,
-                similarity_boost=0.8,
-                style=0.3,
-                use_speaker_boost=True,
-            )
-        )
+def ensure_sentence_endings(text: str) -> str:
+    txt = re.sub(r'\s+', ' ', text).strip()
+    if txt and txt[-1] not in ".!?":
+        txt += "."
+    return txt
 
-        # join streaming chunks into a full mp3 byte blob
-        audio_bytes = b"".join(chunk for chunk in stream)
 
-        if not audio_bytes:
-            raise RuntimeError("Empty audio response")
+def call_deepgram(text: str, model: str) -> bytes:
+    headers = {
+        "Authorization": f"Token {DEEPGRAM_API_KEY}",
+        "Content-Type": "application/json",
+    }
+    params = {
+        "model": model,
+        "encoding": "mp3",
+        "bit_rate": "32000",
+    }
+    resp = requests.post(DEEPGRAM_SPEAK_URL, headers=headers, params=params, json={"text": text})
+    if not resp.ok:
+        raise RuntimeError(f"Deepgram error {resp.status_code}: {resp.text}")
+    return resp.content
 
-        return audio_bytes
 
-    except Exception as e:
-        raise RuntimeError(f"ElevenLabs error: {e}") from e
+def generate_voice_from_text(text: str, voice_id: str = DEFAULT_VOICE_MODEL) -> bytes:
+    if not text.strip():
+        return b""
+
+    text = ensure_sentence_endings(text)
+
+    # CALL DEEPGRAM ONCE — fastest
+    resp = requests.post(
+        DEEPGRAM_SPEAK_URL,
+        headers={
+            "Authorization": f"Token {DEEPGRAM_API_KEY}",
+            "Content-Type": "application/json",
+        },
+        params={
+            "model": voice_id,
+            "encoding": "mp3",
+            "bit_rate": "32000",
+        },
+        json={"text": text},
+        stream=True,
+        timeout=30,
+    )
+
+    if not resp.ok:
+        raise RuntimeError(f"Deepgram error {resp.status_code}: {resp.text}")
+
+    return resp.content
